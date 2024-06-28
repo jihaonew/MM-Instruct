@@ -31,8 +31,8 @@ We release 7B/13B models trained with LLaVA framework.
 
 | Model           | Link                                  |
 | --------------- | ------------------------------------- |
-| MM-Instruct-7B  | [weights](https://huggingface.co/jjjjh/) |
-| MM-Instruct-13B | [weights](https://huggingface.co/jjjjh/) |
+| MM-Instruct-7B  | [weights](https://huggingface.co/jjjjh/MM-Instruct/tree/main/7b_model) |
+| MM-Instruct-13B | [weights](https://huggingface.co/jjjjh/MM-Instruct/tree/main/13b_model) |
 
 ## Install
 
