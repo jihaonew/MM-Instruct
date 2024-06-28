@@ -189,29 +189,29 @@ Besides the evalution in LLaVA-1.5, we provide an extra dataset to evaluate the 
 Please follow the following steps to evaluate your model.
 
 1. Data preparation
-   Please firstly download the test [image](), [Question File]() and [Baseline result]()
+   Firstly download the test [image]()
 2. Generate responses of your own model
 
 ```Shell
 python model_vqa.py \
     --model-path ./checkpoints/LLaVA-13B-v0 \
     --question-file \
-    /path/to/question_file \
+    ./llava/eval/MM-Instruct-eval/MM-Instruct-Eval-question.json \
     --image-folder \
     /path/to/eval_image \
     --answers-file \
     /path/to/answer-file-our.json
 ```
 
-3. Evaluate the generated responses by comparing the your answer with the baseline result(Eg. GPT4-V here).
+3. Evaluate the generated responses by comparing the your answer with the baseline result(Eg. GPT4-V here). We provide results from `GPT4-V`, `Gemini-Pro`, `CogVLM`, `Instruct-BLIP`, `LLaVA-1.5`, `Qwen-VL`
 
 ```Shell
 OPENAI_API_KEY="sk-***********************************" 
 python llava/eval/mminstruct-eval-gpt4v.py \
     --image-folder /path/to/eval_image \
-    --question /path/to/question_file \
+    --question llava/eval/MM-Instruct-eval/MM-Instruct-Eval-question.json \
     --m1 /path/to/answer-file-our.json \
-    --m2 /path/to/answer-file-baseline.json
+    --m2 ./llava/eval/MM-Instruct-eval/baseline_answers/gpt4v.json
 ```
 
 ## **Citation:**
