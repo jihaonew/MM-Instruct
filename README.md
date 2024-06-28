@@ -15,21 +15,23 @@ This repository contains the code, models, and data for the paper [MM-Instruct: 
 This paper introduces MM-Instruct, a large-scale dataset of diverse and high-quality visual instruction data designed to enhance the instruction-following capabilities of large multimodal models (LMMs). While existing visual instruction datasets often focus on question-answering, they struggle to generalize to broader application scenarios such as creative writing, summarization, or image analysis. To address these limitations, we propose a novel approach to constructing MM-Instruct that leverages the strong instruction-following capabilities of existing LLMs to generate novel visual instruction data from large-scale but conventional image captioning datasets. MM-Instruct first leverages ChatGPT to automatically generate diverse instructions from a small set of seed instructions through augmenting and summarization. It then matches these instructions with images and uses an open-sourced large language model (LLM) to generate coherent answers to the instruction-image pairs. The LLM is grounded by the detailed text descriptions of images in the whole answer generation process to guarantee the alignment of the instruction data. Moreover, we introduce a benchmark based on the generated instruction data to evaluate the instruction-following capabilities of existing LMMs. We demonstrate the effectiveness of MM-Instruct by training a LLaVA-1.5 model on the generated data, denoted as LLaVA-Instruct, which exhibits significant improvements in instruction-following capabilities compared to LLaVA-1.5 models.
 
 ## Key Features
+
 - **Diverse Instructions**: MM-Instruct goes beyond simple question-answering, covering a wide range of instructions including creative writing, summarization, and image analysis.
 - **High-Quality**: Instructions and answers are carefully generated and filtered for coherence and alignment with image content.
 - **Automated Pipeline**: We provide an automated pipeline for data generation.
 - **Benchmark for Evaluation**: A held-out subset of MM-Instruct serves as a benchmark for evaluating the instruction-following capabilities of LMMs.
 
 ## Dataset
+
 The MM-Instruct dataset consists of 234k high-quality visual instruction-answer pairs derived from image captioning datasets. You can download it on [huggingface](https://huggingface.co/datasets/jjjjh/MM-Instruct).
 
 ## Models:
 
 We release 7B/13B models trained with LLaVA framework.
 
-| Model | Link |
-|----|----|
-| MM-Instruct-7B | [weights](https://huggingface.co/jjjjh/) |
+| Model           | Link                                  |
+| --------------- | ------------------------------------- |
+| MM-Instruct-7B  | [weights](https://huggingface.co/jjjjh/) |
 | MM-Instruct-13B | [weights](https://huggingface.co/jjjjh/) |
 
 ## Install
@@ -37,12 +39,14 @@ We release 7B/13B models trained with LLaVA framework.
 If you are not using Linux, do *NOT* proceed, see instructions for [macOS](docs/macOS.md) and [Windows](docs/Windows.md).
 
 1. Clone this repository and navigate to MM-Instruct folder
+
 ```bash
 git clone https://github.com/jihaonew/MM-Instruct.git
 cd MM-Instruct
 ```
 
 1. Install Package
+
 ```Shell
 conda create -n llava python=3.10 -y
 conda activate llava
@@ -51,6 +55,7 @@ pip install -e .
 ```
 
 1. Install additional packages for training cases
+
 ```Shell
 pip install -e ".[train]"
 pip install flash-attn --no-build-isolation
@@ -74,19 +79,20 @@ We follow original LLaVA for training and evaluation. On exception is that we us
 LLaVA is trained on 8 A100 GPUs with 80GB memory. To train on fewer GPUs, you can reduce the `per_device_train_batch_size` and increase the `gradient_accumulation_steps` accordingly. Always keep the global batch size the same: `per_device_train_batch_size` x `gradient_accumulation_steps` x `num_gpus`.
 
 ### Hyperparameters
+
 We use a similar set of hyperparameters as Vicuna in finetuning.  Both hyperparameters used in pretraining and finetuning are provided below.
 
 1. Pretraining
 
 | Hyperparameter | Global Batch Size | Learning rate | Epochs | Max length | Weight decay |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| LLaVA-v1.5-13B | 256 | 1e-3 | 1 | 2048 | 0 |
+| -------------- | ----------------: | ------------: | -----: | ---------: | -----------: |
+| LLaVA-v1.5-13B |               256 |          1e-3 |      1 |       2048 |            0 |
 
 2. Finetuning
 
 | Hyperparameter | Global Batch Size | Learning rate | Epochs | Max length | Weight decay |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| LLaVA-v1.5-13B | 128 | 2e-5 | 1 | 2048 | 0 |
+| -------------- | ----------------: | ------------: | -----: | ---------: | -----------: |
+| LLaVA-v1.5-13B |               128 |          2e-5 |      1 |       2048 |            0 |
 
 ### Download Vicuna checkpoints (automatically)
 
@@ -108,7 +114,9 @@ Training script with DeepSpeed ZeRO-2: [`pretrain.sh`](scripts/v1_5/pretrain.sh)
 
  We provide training script with DeepSpeed [here](scripts/pretrain_xformers.sh).
 Tips:
+
 - If you are using V100 which is not supported by FlashAttention, you can use the [memory-efficient attention](https://arxiv.org/abs/2112.05682) implemented in [xFormers](https://github.com/facebookresearch/xformers). Install xformers and replace `llava/train/train_mem.py` above with [llava/train/train_xformers.py](llava/train/train_xformers.py).
+
 </details>
 
 ### Visual Instruction Tuning
@@ -170,48 +178,41 @@ New options to note:
 
 ## Evaluation
 
-Besides the evalution in LLaVA-1.5, we provide an extra dataset to evaluate the intruction-following capabilities of LMMs. 
+### Evaluation On Existing Benchmarks
 
-For the evalution in LLaVA-1.5, we evaluate models on a diverse set of 12 benchmarks. To ensure the reproducibility, we evaluate the models with greedy decoding. We do not evaluate using beam search to make the inference process consistent with the chat demo of real-time outputs.
+We firstly evaluate our MM-Instruct Model on existing 12 benchmarks following LLaVA-1.5. To ensure the reproducibility, we evaluate the models with greedy decoding. We do not evaluate using beam search to make the inference process consistent with the chat demo of real-time outputs. See [Evaluation.md](docs/Evaluation.md).
 
-See [Evaluation.md](docs/Evaluation.md).
+### GPT-assisted Evaluation of Instruction-Following Capability
 
-### GPT-assisted Evaluation
+Besides the evalution in LLaVA-1.5, we provide an extra dataset to evaluate the intruction-following capabilities of LMMs. Our GPT-assisted evaluation of Instruction-Following Capability is provided for thoroughly examining the instruction-following capabilities of LMMs,.  Please see our paper for more details.
 
-Our GPT-assisted evaluation pipeline for multimodal modeling is provided for a comprehensive understanding of the capabilities of vision-language models.  Please see our paper for more details.
+Please follow the following steps to evaluate your model.
 
-1. Generate LLaVA responses
+1. Data preparation
+   Please firstly download the test [image](), [Question File]() and [Baseline result]()
+2. Generate responses of your own model
 
 ```Shell
 python model_vqa.py \
     --model-path ./checkpoints/LLaVA-13B-v0 \
     --question-file \
-    playground/data/coco2014_val_qa_eval/qa90_questions.jsonl \
+    /path/to/question_file \
     --image-folder \
-    /path/to/coco2014_val \
+    /path/to/eval_image \
     --answers-file \
-    /path/to/answer-file-our.jsonl
+    /path/to/answer-file-our.json
 ```
 
-2. Evaluate the generated responses.  In our case, [`answer-file-ref.jsonl`](./playground/data/coco2014_val_qa_eval/qa90_gpt4_answer.jsonl) is the response generated by text-only GPT-4 (0314), with the context captions/boxes provided.
+3. Evaluate the generated responses by comparing the your answer with the baseline result(Eg. GPT4-V here).
 
 ```Shell
-OPENAI_API_KEY="sk-***********************************" python llava/eval/eval_gpt_review_visual.py \
-    --question playground/data/coco2014_val_qa_eval/qa90_questions.jsonl \
-    --context llava/eval/table/caps_boxes_coco2014_val_80.jsonl \
-    --answer-list \
-    /path/to/answer-file-ref.jsonl \
-    /path/to/answer-file-our.jsonl \
-    --rule llava/eval/table/rule.json \
-    --output /path/to/review.json
+OPENAI_API_KEY="sk-***********************************" 
+python llava/eval/mminstruct-eval-gpt4v.py \
+    --image-folder /path/to/eval_image \
+    --question /path/to/question_file \
+    --m1 /path/to/answer-file-our.json \
+    --m2 /path/to/answer-file-baseline.json
 ```
-
-3. Summarize the evaluation results
-
-```Shell
-python summarize_gpt_review.py
-```
-
 
 ## **Citation:**
 
