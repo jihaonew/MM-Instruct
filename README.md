@@ -189,7 +189,7 @@ Besides the evalution in LLaVA-1.5, we provide an extra dataset to evaluate the 
 Please follow the following steps to evaluate your model.
 
 1. Data preparation
-   Firstly download the test [image]()
+   Firstly download the test [image](https://huggingface.co/datasets/jjjjh/MM-Instruct/tree/main)
 2. Generate responses of your own model
 
 ```Shell
