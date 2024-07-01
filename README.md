@@ -8,7 +8,7 @@
 
 </div>
 
-This repository contains the code, models, and data for the paper [MM-Instruct: Generated Visual Instructions for Large Multimodal Model Alignment](https://github.com/jihaonew/MM-Instruct).
+This repository contains the code, models, and data for the paper [MM-Instruct: Generated Visual Instructions for Large Multimodal Model Alignment](https://arxiv.org/abs/2406.19736).
 
 ## Abstract:
 
