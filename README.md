@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![Paper](https://img.shields.io/badge/cs.CV-TODO-b31b1b?logo=arxiv&logoColor=red)](https://github.com/jihaonew/MM-Instruct) [![Model](https://img.shields.io/badge/%F0%9F%A4%97%20Dataset-Instruct-blue)](https://huggingface.co/datasets/jjjjh/MM-Instruct)
+[![Paper](https://img.shields.io/badge/cs.CV-2406.19736-b31b1b?logo=arxiv&logoColor=red)](https://arxiv.org/abs/2406.19736) [![Model](https://img.shields.io/badge/%F0%9F%A4%97%20Dataset-Instruct-blue)](https://huggingface.co/datasets/jjjjh/MM-Instruct)
 
 ![teaser](images/mm_instruct_pipeline.png)
 
@@ -219,11 +219,14 @@ python llava/eval/mminstruct-eval-gpt4v.py \
 If you find this work helpful, please cite our paper:
 
 ```
-@article{
-    liu2024mm,
-    title={MM-Instruct: Generated Visual Instructions for Large Multimodal Model Alignment},
-    author={Jihao Liu and Xin Huang and Jinliang Zheng and Boxiao Liu and Jia Wang and Osamu Yoshie and Yu Liu and Hongsheng Li},
-    year={2024},
+@misc{liu2024mminstructgeneratedvisualinstructions,
+      title={MM-Instruct: Generated Visual Instructions for Large Multimodal Model Alignment}, 
+      author={Jihao Liu and Xin Huang and Jinliang Zheng and Boxiao Liu and Jia Wang and Osamu Yoshie and Yu Liu and Hongsheng Li},
+      year={2024},
+      eprint={2406.19736},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2406.19736}, 
 }
 ```
 
